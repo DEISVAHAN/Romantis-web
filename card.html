@@ -15,10 +15,7 @@
         animation: fadeIn 1.5s ease forwards;
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; }}
 
     /* Glitter Effect */
     .glitter {
@@ -31,18 +28,18 @@
     }
 
     @keyframes glitter {
-        0%, 100% { transform: scale(0.5); opacity: 0.5; }
-        50% { transform: scale(1.4); opacity: 1; }
+        0%, 100% { transform: scale(0.5); opacity: 0.4; }
+        50% { transform: scale(1.3); opacity: 1; }
     }
 
     /* Heart Falling */
     .heart {
         position: fixed;
         top: -20px;
-        color: #ff3e7f;
+        color: #ff2c82;
         font-size: 20px;
         animation: fall linear infinite;
-        opacity: 0.8;
+        opacity: 0.85;
     }
 
     @keyframes fall {
@@ -55,21 +52,13 @@
         text-align: center;
         padding: 80px 20px;
         color: #b30059;
-        text-shadow: 0 0 10px rgba(255, 100, 150, 0.5);
+        text-shadow: 0 0 10px rgba(255, 100, 150, 0.4);
     }
 
-    h1 {
-        font-size: 40px;
-        margin-bottom: 10px;
-    }
+    h1 { font-size: 40px; margin-bottom: 10px; }
+    p { font-size: 20px; max-width: 650px; margin: 0 auto; }
 
-    p {
-        font-size: 20px;
-        max-width: 650px;
-        margin: 0 auto;
-    }
-
-    /* Love Letter Popup */
+    /* Popup Surat */
     .letter-popup {
         position: fixed;
         top: 50%;
@@ -83,7 +72,7 @@
         box-shadow: 0 0 30px rgba(255, 0, 120, 0.4);
         opacity: 0;
         transition: 0.5s ease;
-        z-index: 9999;
+        z-index: 99;
     }
 
     .letter-popup.show {
@@ -91,7 +80,7 @@
         transform: translate(-50%, -50%) scale(1);
     }
 
-    #loveBtn, #closeBtn {
+    #loveBtn, #closeBtn, #downloadBtn {
         margin-top: 30px;
         padding: 14px 30px;
         background: #ff5da2;
@@ -101,19 +90,19 @@
         border-radius: 50px;
         cursor: pointer;
         box-shadow: 0 0 15px rgba(255, 0, 120, 0.5);
-        transition: 0.3s;
+        transition: .3s;
     }
 
-    #loveBtn:hover, #closeBtn:hover {
-        transform: scale(1.07);
-        box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
+    #loveBtn:hover, #closeBtn:hover, #downloadBtn:hover {
+        transform: scale(1.08);
+        box-shadow: 0 0 20px rgba(255, 0, 150, 0.8);
     }
 </style>
 </head>
 <body>
 
-<!-- MUSIC AUTOPLAY -->
-<audio id="bgm" autoplay loop>
+<!-- MUSIK -->
+<audio id="bgm" loop>
     <source src="musikmu.mp3" type="audio/mpeg">
 </audio>
 
@@ -121,7 +110,7 @@
     <h1>Untuk Kamu, yang Paling Aku Sayang 💗</h1>
     <p>
         Di hari spesial ini… aku mau kamu tahu satu hal:  
-        <b>dunia jadi lebih indah sejak kamu ada di dalamnya.</b>  
+        <b>dunia jadi lebih indah sejak kamu ada di dalamnya.</b><br>
         Setiap tawa, setiap tatapanmu, itu seperti sihir yang merubah seluruh hariku.
     </p>
 
@@ -139,11 +128,12 @@
         Aku mencintaimu, dengan cara yang tidak akan pernah bisa dijelaskan kata-kata.
     </p>
 
+    <button id="downloadBtn">Ambil Kejutan 🎁</button>
     <button id="closeBtn">Tutup</button>
 </div>
 
 <script>
-/* CONFETTI */
+/* Confetti */
 function confetti() {
     const c = document.createElement("div");
     c.innerHTML = "✨";
@@ -157,7 +147,7 @@ function confetti() {
 }
 setInterval(confetti, 300);
 
-/* Glitter Generator */
+/* Glitter */
 for (let i = 0; i < 60; i++) {
     let g = document.createElement("div");
     g.className = "glitter";
@@ -180,17 +170,28 @@ function hearts() {
 }
 setInterval(hearts, 400);
 
-/* Popup Controls */
+/* Popup & Music */
+const bgm = document.getElementById("bgm");
 const btn = document.getElementById("loveBtn");
 const popup = document.getElementById("popupLetter");
 const closeBtn = document.getElementById("closeBtn");
+const downloadBtn = document.getElementById("downloadBtn");
 
 btn.onclick = () => {
+    bgm.play();   // musik mulai setelah klik
     popup.classList.add("show");
 };
 
 closeBtn.onclick = () => {
     popup.classList.remove("show");
+};
+
+/* Download kejutan */
+downloadBtn.onclick = () => {
+    const link = document.createElement("a");
+    link.href = "lizhahbd.xlsx";
+    link.download = "lizhahbd.xlsx";
+    link.click();
 };
 </script>
 

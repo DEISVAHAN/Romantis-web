@@ -9,26 +9,41 @@
   body {
     margin: 0;
     padding: 32px 18px;
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    background: #0f1724;
-    color: white;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #ff85b4, #ffd1e8, #ffe6f4);
+    color: #b30059;
     text-align: center;
+    animation: fadeIn 1.5s ease forwards;
   }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
   h1 {
     font-size: 32px;
     margin-bottom: 18px;
+    text-shadow: 0 0 18px rgba(255, 110, 150, 0.5);
   }
-  p {color:#d8e5f3;font-size:17px;margin-bottom:28px;}
+
+  p {color:#8a0044;font-size:18px;margin-bottom:28px;}
+
   .btn {
-    background: #ff6b81;
-    padding: 16px 22px;
+    background: #ff5da2;
+    padding: 16px 26px;
     font-size: 20px;
-    border-radius: 16px;
+    border-radius: 18px;
     color: white;
     text-decoration: none;
     font-weight: bold;
     display: inline-block;
-    box-shadow: 0 4px 14px rgba(255,107,129,0.4);
+    box-shadow: 0 4px 20px rgba(255,107,129,0.5);
+    transition: .3s;
+  }
+
+  .btn:hover {
+    transform: scale(1.07);
   }
 </style>
 </head>
@@ -37,6 +52,7 @@
 
 <h1>Untuk Orang yang Jalee Sayang 💗</h1>
 <p>Ada sesuatu yang spesial Jalee siapkan untukmu hari ini.</p>
+
 <a href="card.html" class="btn">💌 Buka Kartu Ucapan dari Jalee</a>
 
 </body>

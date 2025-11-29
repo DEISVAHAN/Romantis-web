@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kartu Ucapan untukmu 💗</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #ffb6d9, #ffe2f1, #ffd1e8);
+        font-family: "Poppins", sans-serif;
+        overflow: hidden;
+        animation: fadeIn 1.5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    /* Glitter Effect */
+    .glitter {
+        position: fixed;
+        width: 3px;
+        height: 3px;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 50%;
+        animation: glitter 3s infinite ease-in-out;
+    }
+
+    @keyframes glitter {
+        0%, 100% { transform: scale(0.5); opacity: 0.5; }
+        50% { transform: scale(1.4); opacity: 1; }
+    }
+
+    /* Heart Falling */
+    .heart {
+        position: fixed;
+        top: -20px;
+        color: #ff3e7f;
+        font-size: 20px;
+        animation: fall linear infinite;
+        opacity: 0.8;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-50px) rotate(0deg); }
+        100% { transform: translateY(110vh) rotate(360deg); }
+    }
+
+    /* Card Layout */
+    .card-container {
+        text-align: center;
+        padding: 80px 20px;
+        color: #b30059;
+        text-shadow: 0 0 10px rgba(255, 100, 150, 0.5);
+    }
+
+    h1 {
+        font-size: 40px;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 20px;
+        max-width: 650px;
+        margin: 0 auto;
+    }
+
+    /* Love Letter Popup */
+    .letter-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.1);
+        width: 85%;
+        max-width: 450px;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 0 30px rgba(255, 0, 120, 0.4);
+        opacity: 0;
+        transition: 0.5s ease;
+        z-index: 9999;
+    }
+
+    .letter-popup.show {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    #loveBtn, #closeBtn {
+        margin-top: 30px;
+        padding: 14px 30px;
+        background: #ff5da2;
+        border: none;
+        color: white;
+        font-size: 18px;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 0 15px rgba(255, 0, 120, 0.5);
+        transition: 0.3s;
+    }
+
+    #loveBtn:hover, #closeBtn:hover {
+        transform: scale(1.07);
+        box-shadow: 0 0 20px rgba(255, 0, 120, 0.8);
+    }
+</style>
+</head>
+<body>
+
+<!-- MUSIC AUTOPLAY -->
+<audio id="bgm" autoplay loop>
+    <source src="musikmu.mp3" type="audio/mpeg">
+</audio>
+
+<div class="card-container">
+    <h1>Untuk Kamu, yang Paling Aku Sayang 💗</h1>
+    <p>
+        Di hari spesial ini… aku mau kamu tahu satu hal:  
+        <b>dunia jadi lebih indah sejak kamu ada di dalamnya.</b>  
+        Setiap tawa, setiap tatapanmu, itu seperti sihir yang merubah seluruh hariku.
+    </p>
+
+    <button id="loveBtn">Lihat Surat Cinta 💌</button>
+</div>
+
+<!-- POPUP SURAT -->
+<div class="letter-popup" id="popupLetter">
+    <h2 style="text-align:center; margin-top:0; color:#ff2c82;">Surat Cinta Untukmu 💗</h2>
+    <p style="font-size:17px; text-align:justify;">
+        Sayangku…  
+        Terima kasih sudah hadir sebagai anugerah paling manis dalam hidupku.  
+        Kamu adalah doa yang paling sering kusebut tanpa suara.  
+        Semoga hari ulang tahunmu dipenuhi bahagia, kehangatan, dan cinta yang tidak akan pernah selesai.  
+        Aku mencintaimu, dengan cara yang tidak akan pernah bisa dijelaskan kata-kata.
+    </p>
+
+    <button id="closeBtn">Tutup</button>
+</div>
+
+<script>
+/* CONFETTI */
+function confetti() {
+    const c = document.createElement("div");
+    c.innerHTML = "✨";
+    c.style.position = "fixed";
+    c.style.top = "-20px";
+    c.style.left = Math.random() * window.innerWidth + "px";
+    c.style.fontSize = (20 + Math.random() * 20) + "px";
+    c.style.animation = "fall 3s linear forwards";
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+}
+setInterval(confetti, 300);
+
+/* Glitter Generator */
+for (let i = 0; i < 60; i++) {
+    let g = document.createElement("div");
+    g.className = "glitter";
+    g.style.left = Math.random() * 100 + "vw";
+    g.style.top = Math.random() * 100 + "vh";
+    g.style.animationDuration = (2 + Math.random() * 3) + "s";
+    document.body.appendChild(g);
+}
+
+/* Heart Falling */
+function hearts() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.innerHTML = "💗";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.fontSize = (16 + Math.random() * 20) + "px";
+    h.style.animationDuration = (3 + Math.random() * 3) + "s";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 6000);
+}
+setInterval(hearts, 400);
+
+/* Popup Controls */
+const btn = document.getElementById("loveBtn");
+const popup = document.getElementById("popupLetter");
+const closeBtn = document.getElementById("closeBtn");
+
+btn.onclick = () => {
+    popup.classList.add("show");
+};
+
+closeBtn.onclick = () => {
+    popup.classList.remove("show");
+};
+</script>
+
+</body>
+</html>

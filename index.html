@@ -65,6 +65,58 @@
   .spark {position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.85);filter:blur(.6px);opacity:.9}
   .emoji {position:absolute;font-size:20px;will-change:transform,opacity}
 
+  /* Polaroid Gallery */
+  .polaroid-gallery {
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+    margin-top:28px;
+    margin-bottom:22px;
+  }
+  .polaroid {
+    background:white;
+    width:160px;
+    padding:12px 12px 30px 12px;
+    border-radius:12px;
+    box-shadow:0 8px 28px rgba(255,44,130,0.22);
+    transform:rotate(-2deg);
+    transition:0.35s ease;
+    opacity:0;
+    animation:polaroid-in 1.2s ease forwards;
+  }
+  .polaroid:nth-child(2){
+    transform:rotate(1.2deg);
+    animation-delay:.25s;
+  }
+  .polaroid:nth-child(3){
+    transform:rotate(-1deg);
+    animation-delay:.45s;
+  }
+
+  .polaroid:hover{
+    transform:rotate(0deg) scale(1.05);
+    box-shadow:0 12px 34px rgba(255,44,130,0.35);
+  }
+
+  .polaroid img{
+    width:100%;
+    border-radius:8px;
+  }
+
+  .polaroid .caption{
+    text-align:center;
+    margin-top:10px;
+    color:#ff2c82;
+    font-weight:600;
+    font-size:14px;
+  }
+
+  @keyframes polaroid-in {
+    0% {opacity:0; transform:translateY(14px) rotate(-4deg)}
+    100% {opacity:1; transform:translateY(0) rotate(var(--r,0deg))}
+  }
+  
   /* responsive */
   @media (max-width:520px){
     h1{font-size:24px}
@@ -126,8 +178,31 @@
     <section id="view-card" class="view" aria-hidden="true">
       <div class="card" role="region" aria-label="Kartu Ulang Tahun">
         <h1>Selamat Ulang Tahun Lizha Tri Wahyunii Cantikk 💗</h1>
-        <p class="lead">Ini harinya. Semoga doa dan senyum lizha dikabulkan yaaa. Buka surat cintaku ya.</p>
-        <button id="open-letter" class="btn">Buka Surat Cinta 💌</button>
+        <p<p class="lead">Ini harinya. Semoga doa dan senyum lizha dikabulkan yaaa. Buka surat cintaku ya.</p>
+
+<!-- =========================
+     GALERI POLAROID FOTO
+     ========================= -->
+<div class="polaroid-gallery">
+
+  <div class="polaroid">
+    <img src="foto1.jpg" alt="foto 1">
+    <div class="caption">Foto 1</div>
+  </div>
+
+  <div class="polaroid">
+    <img src="foto2.jpg" alt="foto 2">
+    <div class="caption">Foto 2</div>
+  </div>
+
+  <div class="polaroid">
+    <img src="foto3.jpg" alt="foto 3">
+    <div class="caption">Foto 3</div>
+  </div>
+
+</div>
+
+<button id="open-letter" class="btn">Buka Surat Cinta 💌</button>
       </div>
     </section>
 

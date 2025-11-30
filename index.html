@@ -10,50 +10,64 @@
     margin: 0;
     padding: 32px 18px;
     font-family: "Poppins", sans-serif;
-    background: linear-gradient(135deg, #ff85b4, #ffd1e8, #ffe6f4);
-    color: #b30059;
+    background: linear-gradient(135deg, #ff8bbd, #ffc4dd);
+    color: white;
     text-align: center;
-    animation: fadeIn 1.5s ease forwards;
   }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
   h1 {
     font-size: 32px;
     margin-bottom: 18px;
-    text-shadow: 0 0 18px rgba(255, 110, 150, 0.5);
+    text-shadow: 0 0 10px rgba(255,255,255,0.6);
   }
-
-  p {color:#8a0044;font-size:18px;margin-bottom:28px;}
-
+  p {
+    color: #fff0f7;
+    font-size: 18px;
+    margin-bottom: 28px;
+  }
   .btn {
-    background: #ff5da2;
+    background: #ff4d92;
     padding: 16px 26px;
     font-size: 20px;
     border-radius: 18px;
     color: white;
     text-decoration: none;
     font-weight: bold;
+    box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
     display: inline-block;
-    box-shadow: 0 4px 20px rgba(255,107,129,0.5);
-    transition: .3s;
+    margin-top: 20px;
+    transition: 0.3s;
   }
-
   .btn:hover {
     transform: scale(1.07);
+    box-shadow: 0 0 25px rgba(255,0,110,0.8);
   }
 </style>
 </head>
 
 <body>
 
+<!-- MUSIK HANYA DI INDEX -->
+<audio id="bgm" src="musik.mp3" preload="auto" loop></audio>
+
 <h1>Untuk Orang yang Jalee Sayang 💗</h1>
 <p>Ada sesuatu yang spesial Jalee siapkan untukmu hari ini.</p>
 
-<a href="card.html" class="btn">💌 Buka Kartu Ucapan dari Jalee</a>
+<a href="card.html" class="btn" id="openCard">💌 Buka Kartu Ucapan dari Jalee</a>
+
+<script>
+let musicStarted = false;
+
+// Trigger musik saat user klik di mana saja
+function startMusic() {
+    if (!musicStarted) {
+        document.getElementById("bgm").play();
+        musicStarted = true;
+    }
+}
+
+document.body.addEventListener("click", startMusic);
+document.getElementById("openCard").addEventListener("click", startMusic);
+</script>
 
 </body>
 </html>

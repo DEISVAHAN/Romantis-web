@@ -16,16 +16,12 @@
   html,body{height:100%;margin:0;font-family:"Poppins",system-ui,Arial,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#3b102b;overflow:hidden}
 
   .app {height:100%;display:flex;align-items:center;justify-content:center;position:relative;padding:24px}
-  .view {position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;transition:opacity .6s ease, transform .6s ease;opacity:0;pointer-events:none}
+  .view {position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;transition:opacity .45s ease, transform .45s ease;opacity:0;pointer-events:none}
   .view.active {opacity:1;pointer-events:auto}
-  .fade-in {transform: translateY(0); opacity:1}
-  .fade-out {transform: translateY(12px); opacity:0.0}
-
-  /* Card box */
   .card {
     width:100%;
     max-width:880px;
-    background:linear-gradient(180deg, rgba(255,255,255,0.95), rgba(255,255,255,0.92));
+    background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
     border-radius:20px;
     padding:34px;
     box-shadow: 0 20px 60px rgba(183,60,120,0.12);
@@ -33,8 +29,8 @@
     border:1px solid var(--soft);
   }
 
-  h1{margin:0 0 8px;font-size:34px;color:var(--accent);text-shadow:0 6px 26px rgba(255,44,130,0.08)}
-  p.lead{margin:0 0 18px;color:#6b173f;font-size:18px;line-height:1.6}
+  h1{margin:0 0 8px;font-size:30px;color:var(--accent);text-shadow:0 6px 26px rgba(255,44,130,0.08)}
+  p.lead{margin:0 0 18px;color:#6b173f;font-size:17px;line-height:1.6}
 
   .btn {
     display:inline-block;
@@ -49,26 +45,31 @@
   .popup {
     position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.86);
     width:92%;max-width:520px;background:#fff;border-radius:16px;padding:20px;box-shadow:0 24px 80px rgba(183,60,120,0.18);
-    opacity:0;pointer-events:none;transition:transform .45s cubic-bezier(.2,.9,.2,1),opacity .45s;
+    opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.2,.9,.2,1),opacity .35s;
   }
   .popup.show {opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
-  .popup h3{margin:0 0 8px;color:var(--accent)}
+  .popup h3{margin:0 0 10px;color:var(--accent)}
   .popup p{color:#4b1a3a;line-height:1.6}
 
-  /* Glitter + confetti + hearts layer */
+  /* Little modal for "masa seneng doang" */
+  .mini-modal {
+    position:fixed;left:50%;top:22%;transform:translate(-50%,-50%) scale(.8);
+    background:#fff;padding:14px 18px;border-radius:12px;box-shadow:0 14px 50px rgba(0,0,0,0.12);
+    opacity:0;pointer-events:none;transition:all .28s ease;
+  }
+  .mini-modal.show {opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .mini-modal p{margin:0;color:#6b173f}
+
+  /* Effects layer */
   .effects {position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
   .spark {position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.85);filter:blur(.6px);opacity:.9}
   .emoji {position:absolute;font-size:20px;will-change:transform,opacity}
 
-  /* final message */
-  .final {text-align:center;padding:20px}
-  .final h2{color:var(--accent);margin-bottom:8px}
-
   /* responsive */
   @media (max-width:520px){
-    h1{font-size:26px}
-    .card{padding:20px;border-radius:14px}
-    .btn{font-size:15px}
+    h1{font-size:24px}
+    .card{padding:18px;border-radius:14px}
+    .btn{font-size:15px;padding:10px 16px}
   }
 </style>
 </head>
@@ -78,13 +79,46 @@
     <!-- Effects layer -->
     <div class="effects" id="effects"></div>
 
+    <!-- VIEW Q: Question (baru) -->
+    <section id="view-question" class="view active" aria-hidden="false">
+      <div class="card" role="region" aria-label="Pertanyaan lucu">
+        <h1>Gimana ulang tahunnya hari ini? 🎂</h1>
+        <p class="lead">Seneng banget gaa?</p>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
+          <button id="btn-seneng-dong" class="btn small">Seneng dong</button>
+          <button id="btn-seneng-bgt" class="btn small">Seneng banget</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- MINI MODAL lucu untuk "Seneng dong" -->
+    <div id="mini-modal" class="mini-modal" aria-hidden="true">
+      <p>😜 Masa seneng doang... pilih "Seneng banget" dong!</p>
+    </div>
+
+    <!-- VIEW P: Prayer -->
+    <section id="view-prayer" class="view" aria-hidden="true">
+      <div class="card" role="region" aria-label="Doa sebelum buka kartu">
+        <h1>Yuk do'a dulu, Lizha 🌹</h1>
+        <p class="lead">Bacalah doa ini dengan khusyuk lalu tekan tombol bila sudah selesai:</p>
+        <div style="background:linear-gradient(90deg,#fff,#fff8);padding:14px;border-radius:12px;margin:12px 0">
+          <em style="color:#6b173f;line-height:1.6;display:block;text-align:left">
+            Allohumma Inni As’aluka salamatan fid dinni wa dunya Wal Aakhiroh
+            Wa ‘afayitan fii rizqi Wa barokatan fii ‘umri
+          </em>
+        </div>
+        <p style="color:#7b2450;font-size:14px">Setelah mendoa, tekan tombol di bawah ya Lizha 💗</p>
+        <button id="btn-done-doa" class="btn">Klik ini kalo udah do'anya yaa</button>
+      </div>
+    </section>
+
     <!-- VIEW 1: Intro (index) -->
-    <section id="view-intro" class="view active" aria-hidden="false">
+    <section id="view-intro" class="view" aria-hidden="true">
       <div class="card" role="region" aria-label="Intro">
         <h1>Untuk Lizha yang cantiikk imutt lucuu 🫶🏻🫶🏻</h1>
-        <p class="lead">Ketuk di mana saja untuk membuka kartu spesial ini. Musik akan menyala pelan — nikmati.</p>
+        <p class="lead">Ketuk di mana saja atau tekan tombol di bawah untuk membuka kartu spesial ini. Musik akan menyala pelan — nikmati.</p>
         <button id="open-anywhere" class="btn">Buka Kartu Ucapan dari Jalee</button>
-        <p style="margin-top:14px;color:#8a2a4b;font-size:14px"></p>
+        <p style="margin-top:14px;color:#8a2a4b;font-size:14px">(atau ketuk layar mana saja)</p>
       </div>
     </section>
 
@@ -131,20 +165,20 @@
    ==================== */
 
 const views = {
+  question: document.getElementById('view-question'),
+  prayer: document.getElementById('view-prayer'),
   intro: document.getElementById('view-intro'),
   card: document.getElementById('view-card'),
   final: document.getElementById('view-final')
 };
 const popup = document.getElementById('popup');
+const miniModal = document.getElementById('mini-modal');
 const effects = document.getElementById('effects');
 const audio = document.getElementById('audio');
 
 let musicStarted = false;
+audio.volume = 0.20; // sangat halus
 
-// Volume setting: "sangat halus" = 0.2
-audio.volume = 0.20;
-
-// utility: show a view
 function showView(name){
   Object.values(views).forEach(v=>{
     v.classList.remove('active');
@@ -154,64 +188,88 @@ function showView(name){
   views[name].setAttribute('aria-hidden','false');
 }
 
-// Start music (called on first user gesture)
-function startMusicThenGoToCard(){
+/* --------------------------
+   Question view interactions
+   -------------------------- */
+document.getElementById('btn-seneng-dong').addEventListener('click', ()=>{
+  // show mini modal briefly
+  miniModal.classList.add('show');
+  miniModal.setAttribute('aria-hidden','false');
+  setTimeout(()=> {
+    miniModal.classList.remove('show');
+    miniModal.setAttribute('aria-hidden','true');
+  }, 1800);
+});
+
+document.getElementById('btn-seneng-bgt').addEventListener('click', ()=>{
+  // go to prayer view
+  showView('prayer');
+});
+
+/* --------------------------
+   Prayer view interactions
+   -------------------------- */
+document.getElementById('btn-done-doa').addEventListener('click', ()=>{
+  // After doa, go to intro (where user can click anywhere to start music)
+  showView('intro');
+});
+
+/* --------------------------
+   Intro view: clicking starts music then navigates to card
+   -------------------------- */
+function startMusicThenShowCard(){
   if (musicStarted) {
-    // already started — just navigate
     showView('card');
     return;
   }
-  // try play
   audio.play().then(()=>{
     musicStarted = true;
-    // small delay so audio has started (helps iOS keep-play-after-navigation within SPA)
-    setTimeout(()=> showView('card'), 180);
+    setTimeout(()=> showView('card'), 160);
   }).catch(err=>{
-    // if blocked for some reason, still navigate
     console.warn('Play blocked or failed:', err);
-    showView('card');
+    showView('card'); // still proceed
   });
 }
 
-/* ===== Click-anywhere handler (only once) ===== */
-// User chose "klik dimana saja" — attach one-time listener
-document.getElementById('open-anywhere').addEventListener('click', startMusicThenGoToCard);
-document.body.addEventListener('click', function onBodyClick(e){
-  // if clicked an interactive control, let its own handler run
-  // otherwise treat as "open anywhere"
-  if (!e.target.closest('button')) {
-    startMusicThenGoToCard();
-  }
-  // run only once
-  document.body.removeEventListener('click', onBodyClick);
-}, { once: true, capture: true });
+// open-anywhere button
+document.getElementById('open-anywhere').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  startMusicThenShowCard();
+});
 
-/* also allow pressing keyboard Enter/Space to start */
-document.addEventListener('keydown', function kd(e){
+// clicking background/anywhere in intro should also start (one-time)
+function introBodyClickHandler(e){
+  // if clicked a button inside intro, ignore (button handler will handle)
+  if (e.target.closest('button')) return;
+  startMusicThenShowCard();
+}
+views.intro.addEventListener('click', introBodyClickHandler, { once: true, capture: true });
+
+// keyboard
+document.addEventListener('keyup', (e)=>{
   if (!musicStarted && (e.key === 'Enter' || e.key === ' ')) {
-    startMusicThenGoToCard();
-    document.removeEventListener('keydown', kd);
+    // if currently on intro view, start; otherwise ignore
+    if (views.intro.classList.contains('active')) startMusicThenShowCard();
   }
 });
 
-/* ===== Card view interactions ===== */
+/* --------------------------
+   Card view: popup, effects
+   -------------------------- */
 document.getElementById('open-letter').addEventListener('click', ()=>{
   popup.classList.add('show');
   popup.setAttribute('aria-hidden','false');
-  // subtle confetti burst + hearts when popup opens
   burstConfetti(36);
   burstHearts(12);
 });
 
-/* Popup controls */
 document.getElementById('close-popup').addEventListener('click', ()=>{
   popup.classList.remove('show');
   popup.setAttribute('aria-hidden','true');
 });
 
-/* "Ambil Kejutan" - triggers download + go to final view */
+/* Ambil kejutan -> download + go to final */
 document.getElementById('take-surprise').addEventListener('click', ()=>{
-  // download the excel file (must be at same folder)
   const a = document.createElement('a');
   a.href = 'lizhahbd.xlsx';
   a.download = 'lizhahbd.xlsx';
@@ -222,19 +280,15 @@ document.getElementById('take-surprise').addEventListener('click', ()=>{
   popup.classList.remove('show');
   popup.setAttribute('aria-hidden','true');
 
-  // small delay then show final view
   setTimeout(()=> {
     showView('final');
-    // small celebratory burst
     burstConfetti(60);
     burstHearts(24);
   }, 350);
 });
 
-/* Replay (back to intro) - music remains playing */
-document.getElementById('replay').addEventListener('click', ()=> {
-  showView('intro');
-});
+/* Replay */
+document.getElementById('replay').addEventListener('click', ()=> showView('intro'));
 
 /* ====================
    Visual effects
@@ -308,18 +362,24 @@ function burstHearts(n=20){
 setInterval(()=> burstConfetti(6), 4200);
 setInterval(()=> burstHearts(3), 3500);
 
-/* ====================
-   Helpful: indicate audio playback state (console)
-   ==================== */
+/* Audio debug */
 audio.addEventListener('play', ()=> console.log('🎵 Musik dimulai'));
 audio.addEventListener('pause', ()=> console.log('⏸ Musik berhenti'));
 audio.addEventListener('error', (e)=> console.warn('Audio error', e));
 
-/* ===== Accessibility: let keyboard users open too ===== */
+/* Accessibility: keys to progress while on question/prayer/intro */
 document.addEventListener('keyup', (e)=>{
-  if (!musicStarted && (e.key === 'Enter' || e.key === ' ')) startMusicThenGoToCard();
+  if (e.key === 'Enter') {
+    // If on question view, treat Enter as "Seneng banget"
+    if (views.question.classList.contains('active')) {
+      document.getElementById('btn-seneng-bgt').click();
+    } else if (views.prayer.classList.contains('active')) {
+      document.getElementById('btn-done-doa').click();
+    } else if (views.intro.classList.contains('active')) {
+      document.getElementById('open-anywhere').click();
+    }
+  }
 });
-
 </script>
 </body>
 </html>

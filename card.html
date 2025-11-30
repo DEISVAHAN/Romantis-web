@@ -15,73 +15,70 @@
         animation: fadeIn 1.5s ease forwards;
     }
 
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; }}
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1;} }
 
-    /* Glitter Effect */
+    /* Glitter */
     .glitter {
         position: fixed;
         width: 3px;
         height: 3px;
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255,255,255,0.9);
         border-radius: 50%;
         animation: glitter 3s infinite ease-in-out;
     }
-
     @keyframes glitter {
-        0%, 100% { transform: scale(0.5); opacity: 0.4; }
-        50% { transform: scale(1.3); opacity: 1; }
+        0%, 100% { transform: scale(.5); opacity:.5; }
+        50% { transform: scale(1.3); opacity:1; }
     }
 
-    /* Heart Falling */
+    /* Hearts */
     .heart {
         position: fixed;
         top: -20px;
         color: #ff2c82;
         font-size: 20px;
         animation: fall linear infinite;
-        opacity: 0.85;
+        opacity: .85;
     }
-
     @keyframes fall {
-        0% { transform: translateY(-50px) rotate(0deg); }
-        100% { transform: translateY(110vh) rotate(360deg); }
+        0% {transform: translateY(-50px) rotate(0deg);}
+        100% {transform: translateY(110vh) rotate(360deg);}
     }
 
-    /* Card Layout */
+    /* Container */
     .card-container {
         text-align: center;
         padding: 80px 20px;
         color: #b30059;
         text-shadow: 0 0 10px rgba(255, 100, 150, 0.4);
     }
+    h1 { font-size: 40px; }
+    p { font-size: 20px; max-width: 650px; margin: auto; }
 
-    h1 { font-size: 40px; margin-bottom: 10px; }
-    p { font-size: 20px; max-width: 650px; margin: 0 auto; }
-
-    /* Popup Surat */
+    /* Popup */
     .letter-popup {
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%) scale(0.1);
+        transform: translate(-50%, -50%) scale(.1);
         width: 85%;
         max-width: 450px;
         background: white;
-        padding: 30px;
+        padding: 28px;
         border-radius: 20px;
-        box-shadow: 0 0 30px rgba(255, 0, 120, 0.4);
+        box-shadow: 0 0 30px rgba(255,0,120,.4);
         opacity: 0;
-        transition: 0.5s ease;
-        z-index: 99;
+        transition: .45s ease;
+        z-index: 999;
     }
-
     .letter-popup.show {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
     }
 
-    #loveBtn, #closeBtn, #downloadBtn {
-        margin-top: 30px;
+    /* Buttons */
+    button {
+        margin-top: 25px;
         padding: 14px 30px;
         background: #ff5da2;
         border: none;
@@ -89,43 +86,41 @@
         font-size: 18px;
         border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 0 15px rgba(255, 0, 120, 0.5);
+        box-shadow: 0 0 15px rgba(255,0,120,.5);
         transition: .3s;
     }
-
-    #loveBtn:hover, #closeBtn:hover, #downloadBtn:hover {
+    button:hover {
         transform: scale(1.08);
-        box-shadow: 0 0 20px rgba(255, 0, 150, 0.8);
+        box-shadow: 0 0 22px rgba(255,0,140,.8);
     }
 </style>
 </head>
 <body>
 
-<!-- MUSIK -->
-<audio id="bgm" loop>
+<!-- MUSIK (dimulai muted untuk iPhone) -->
+<audio id="bgm" muted loop>
     <source src="musikmu.mp3" type="audio/mpeg">
 </audio>
 
 <div class="card-container">
     <h1>Untuk Kamu, yang Paling Aku Sayang 💗</h1>
     <p>
-        Di hari spesial ini… aku mau kamu tahu satu hal:  
-        <b>dunia jadi lebih indah sejak kamu ada di dalamnya.</b><br>
-        Setiap tawa, setiap tatapanmu, itu seperti sihir yang merubah seluruh hariku.
+        Di hari spesial ini… aku mau kamu tahu satu hal:<br>
+        <b>dunia jadi lebih indah sejak kamu ada di dalamnya.</b>
     </p>
 
     <button id="loveBtn">Lihat Surat Cinta 💌</button>
 </div>
 
-<!-- POPUP SURAT -->
+<!-- POPUP -->
 <div class="letter-popup" id="popupLetter">
-    <h2 style="text-align:center; margin-top:0; color:#ff2c82;">Surat Cinta Untukmu 💗</h2>
+    <h2 style="text-align:center; color:#ff2c82;">Surat Cinta Untukmu 💗</h2>
+
     <p style="font-size:17px; text-align:justify;">
         Sayangku…  
         Terima kasih sudah hadir sebagai anugerah paling manis dalam hidupku.  
-        Kamu adalah doa yang paling sering kusebut tanpa suara.  
-        Semoga hari ulang tahunmu dipenuhi bahagia, kehangatan, dan cinta yang tidak akan pernah selesai.  
-        Aku mencintaimu, dengan cara yang tidak akan pernah bisa dijelaskan kata-kata.
+        Kamu adalah doa yang paling sering kusebut dalam hati.  
+        Aku mencintaimu, dengan cara yang tak bisa dijelaskan.
     </p>
 
     <button id="downloadBtn">Ambil Kejutan 🎁</button>
@@ -133,44 +128,29 @@
 </div>
 
 <script>
-/* Confetti */
-function confetti() {
-    const c = document.createElement("div");
-    c.innerHTML = "✨";
-    c.style.position = "fixed";
-    c.style.top = "-20px";
-    c.style.left = Math.random() * window.innerWidth + "px";
-    c.style.fontSize = (20 + Math.random() * 20) + "px";
-    c.style.animation = "fall 3s linear forwards";
-    document.body.appendChild(c);
-    setTimeout(() => c.remove(), 3000);
-}
-setInterval(confetti, 300);
-
-/* Glitter */
+/* ---- Animasi Glitter ---- */
 for (let i = 0; i < 60; i++) {
     let g = document.createElement("div");
     g.className = "glitter";
-    g.style.left = Math.random() * 100 + "vw";
-    g.style.top = Math.random() * 100 + "vh";
-    g.style.animationDuration = (2 + Math.random() * 3) + "s";
+    g.style.left = Math.random()*100+"vw";
+    g.style.top = Math.random()*100+"vh";
+    g.style.animationDuration = (2 + Math.random()*3)+"s";
     document.body.appendChild(g);
 }
 
-/* Heart Falling */
-function hearts() {
+/* ---- Heart Falling ---- */
+setInterval(() => {
     const h = document.createElement("div");
     h.className = "heart";
     h.innerHTML = "💗";
-    h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.fontSize = (16 + Math.random() * 20) + "px";
-    h.style.animationDuration = (3 + Math.random() * 3) + "s";
+    h.style.left = Math.random()*window.innerWidth+"px";
+    h.style.fontSize = (16 + Math.random()*20)+"px";
+    h.style.animationDuration = (3 + Math.random()*3)+"s";
     document.body.appendChild(h);
-    setTimeout(() => h.remove(), 6000);
-}
-setInterval(hearts, 400);
+    setTimeout(()=>h.remove(),6000);
+}, 400);
 
-/* Popup & Music */
+/* ---- Popup & Musik ---- */
 const bgm = document.getElementById("bgm");
 const btn = document.getElementById("loveBtn");
 const popup = document.getElementById("popupLetter");
@@ -178,20 +158,21 @@ const closeBtn = document.getElementById("closeBtn");
 const downloadBtn = document.getElementById("downloadBtn");
 
 btn.onclick = () => {
-    bgm.play();   // musik mulai setelah klik
     popup.classList.add("show");
+
+    // iPhone-friendly music play
+    bgm.muted = false;
+    bgm.play().catch(()=>{});
 };
 
-closeBtn.onclick = () => {
-    popup.classList.remove("show");
-};
+closeBtn.onclick = () => popup.classList.remove("show");
 
-/* Download kejutan */
+/* Download Kejutan */
 downloadBtn.onclick = () => {
-    const link = document.createElement("a");
-    link.href = "lizhahbd.xlsx";
-    link.download = "lizhahbd.xlsx";
-    link.click();
+    const a = document.createElement("a");
+    a.href = "lizhahbd.xlsx";
+    a.download = "lizhahbd.xlsx";
+    a.click();
 };
 </script>
 

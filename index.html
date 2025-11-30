@@ -1,154 +1,385 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Happy Birthday, Lizha 💗</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Kartu Ucapan dari Jalee — Lizha 💗</title>
 <style>
-    body {
-        font-family: "Poppins", sans-serif;
-        margin: 0;
-        padding: 0;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4);
-        animation: gradient-animation 10s ease infinite;
-        background-size: 400% 400%;
-        text-align: center;
-    }
+  /* ===== Base & Theme (Pink estetik, dramatis) ===== */
+  :root{
+    --bg1: #ffd6e8;
+    --bg2: #ffb6d9;
+    --accent: #ff2c82;
+    --soft: rgba(255,44,130,0.12);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;font-family:"Poppins",system-ui,Arial,sans-serif;background:linear-gradient(135deg,var(--bg1),var(--bg2));color:#3b102b;overflow:hidden}
 
-    @keyframes gradient-animation {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+  .app {height:100%;display:flex;align-items:center;justify-content:center;position:relative;padding:24px}
+  .view {position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;transition:opacity .45s ease, transform .45s ease;opacity:0;pointer-events:none}
+  .view.active {opacity:1;pointer-events:auto}
+  .card {
+    width:100%;
+    max-width:880px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,255,255,0.92));
+    border-radius:20px;
+    padding:34px;
+    box-shadow: 0 20px 60px rgba(183,60,120,0.12);
+    text-align:center;
+    border:1px solid var(--soft);
+  }
 
-    h1 {
-        margin-top: 40px;
-        font-size: 38px;
-        color: #fff;
-        text-shadow: 2px 2px 6px rgba(0,0,0,0.2);
-    }
+  h1{margin:0 0 8px;font-size:30px;color:var(--accent);text-shadow:0 6px 26px rgba(255,44,130,0.08)}
+  p.lead{margin:0 0 18px;color:#6b173f;font-size:17px;line-height:1.6}
 
-    .lead {
-        font-size: 18px;
-        color: #fff;
-        padding: 0 20px;
-    }
+  .btn {
+    display:inline-block;
+    background:linear-gradient(90deg,var(--accent),#ff6fa8);
+    color:white;padding:12px 20px;border-radius:14px;border:none;font-weight:700;font-size:16px;
+    box-shadow:0 10px 30px rgba(255,44,130,0.16);cursor:pointer;
+  }
+  .btn.ghost {background:transparent;color:var(--accent);border:2px solid rgba(255,44,130,0.12);box-shadow:none}
+  .small {padding:10px 14px;font-size:15px;border-radius:12px}
 
-    /* Polaroid gallery */
-    .gallery {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 40px;
-        gap: 25px;
-        padding-bottom: 60px;
-    }
+  /* Popup letter */
+  .popup {
+    position:fixed;left:50%;top:50%;transform:translate(-50%,-50%) scale(.86);
+    width:92%;max-width:520px;background:#fff;border-radius:16px;padding:20px;box-shadow:0 24px 80px rgba(183,60,120,0.18);
+    opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.2,.9,.2,1),opacity .35s;
+  }
+  .popup.show {opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .popup h3{margin:0 0 10px;color:var(--accent)}
+  .popup p{color:#4b1a3a;line-height:1.6}
 
-    .polaroid {
-        width: 230px;
-        background: #fff;
-        padding: 10px;
-        box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-        transform: rotate(-2deg);
-        transition: 0.4s;
-        border-radius: 6px;
-    }
+  /* Little modal for "masa seneng doang" */
+  .mini-modal {
+    position:fixed;left:50%;top:22%;transform:translate(-50%,-50%) scale(.8);
+    background:#fff;padding:14px 18px;border-radius:12px;box-shadow:0 14px 50px rgba(0,0,0,0.12);
+    opacity:0;pointer-events:none;transition:all .28s ease;
+  }
+  .mini-modal.show {opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+  .mini-modal p{margin:0;color:#6b173f}
 
-    .polaroid:hover {
-        transform: scale(1.07) rotate(0deg);
-        box-shadow: 0px 6px 14px rgba(0,0,0,0.4);
-    }
+  /* Effects layer */
+  .effects {position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:20}
+  .spark {position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.85);filter:blur(.6px);opacity:.9}
+  .emoji {position:absolute;font-size:20px;will-change:transform,opacity}
 
-    .polaroid img {
-        width: 100%;
-        border-radius: 4px;
-    }
-
-    .caption {
-        font-size: 14px;
-        margin-top: 5px;
-        font-weight: bold;
-    }
-
-    /* Button */
-    .btn-love {
-        margin-top: 40px;
-        padding: 12px 28px;
-        font-size: 18px;
-        background: #ff4f7a;
-        color: white;
-        border: none;
-        border-radius: 30px;
-        cursor: pointer;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        transition: 0.3s;
-    }
-
-    .btn-love:hover {
-        background: #ff2359;
-        transform: translateY(-3px);
-    }
-
+  /* responsive */
+  @media (max-width:520px){
+    h1{font-size:24px}
+    .card{padding:18px;border-radius:14px}
+    .btn{font-size:15px;padding:10px 16px}
+  }
 </style>
 </head>
-
 <body>
+  <div class="app" id="app">
 
-<!-- Background Music -->
-<audio autoplay loop>
-    <source src="https://files.catbox.moe/xjq7g5.mp3" type="audio/mp3">
-</audio>
+    <!-- Effects layer -->
+    <div class="effects" id="effects"></div>
 
-<h1>Happy Birthday, Lizha 💗</h1>
+    <!-- VIEW Q: Question (baru) -->
+    <section id="view-question" class="view active" aria-hidden="false">
+      <div class="card" role="region" aria-label="Pertanyaan lucu">
+        <h1>Gimana ulang tahunnya hari ini? 🎂</h1>
+        <p class="lead">Seneng banget gaa?</p>
+        <div style="display:flex;gap:12px;justify-content:center;margin-top:12px">
+          <button id="btn-seneng-dong" class="btn small">Seneng dong</button>
+          <button id="btn-seneng-bgt" class="btn small">Seneng banget</button>
+        </div>
+      </div>
+    </section>
 
-<p class="lead">
-Hari ini adalah hari spesial, hari dimana dunia kedatangan gadis paling cantik, paling lucu, dan paling aku sayangi.
-Semoga semua doa baik memeluk langkah kamu.
-</p>
-
-<p class="lead">
-Aku bikin halaman ini khusus untuk kamu… isinya kenangan kecil dan kalimat-kalimat sayang dariku 💗
-</p>
-
-
-<!-- === GALERI POLAROID === -->
-<div class="gallery">
-    <div class="polaroid">
-        <img src="https://files.catbox.moe/yourimage1.jpg">
-        <div class="caption">Waktu senyum kamu bikin aku deg-degan</div>
+    <!-- MINI MODAL lucu untuk "Seneng dong" -->
+    <div id="mini-modal" class="mini-modal" aria-hidden="true">
+      <p>😜 Masa seneng doang... pilih "Seneng banget" dong!</p>
     </div>
 
-    <div class="polaroid">
-        <img src="https://files.catbox.moe/yourimage2.jpg">
-        <div class="caption">Cantik banget sumpah 😳</div>
+    <!-- VIEW P: Prayer -->
+    <section id="view-prayer" class="view" aria-hidden="true">
+      <div class="card" role="region" aria-label="Doa sebelum buka kartu">
+        <h1>Yuk do'a dulu, Lizha 🌹</h1>
+        <p class="lead">Bacalah doa ini dengan khusyuk lalu tekan tombol bila sudah selesai:</p>
+        <div style="background:linear-gradient(90deg,#fff,#fff8);padding:14px;border-radius:12px;margin:12px 0">
+          <em style="color:#6b173f;line-height:1.6;display:block;text-align:left">
+            Allohumma Inni As’aluka salamatan fid dinni wa dunya Wal Aakhiroh
+            Wa ‘afayitan fii rizqi Wa barokatan fii ‘umri
+          </em>
+        </div>
+        <p style="color:#7b2450;font-size:14px">Setelah mendoa, tekan tombol di bawah ya Lizha 💗</p>
+        <button id="btn-done-doa" class="btn">Klik ini kalo udah do'anya yaa</button>
+      </div>
+    </section>
+
+    <!-- VIEW 1: Intro (index) -->
+    <section id="view-intro" class="view" aria-hidden="true">
+      <div class="card" role="region" aria-label="Intro">
+        <h1>Untuk Lizha yang cantiikk imutt lucuu 🫶🏻🫶🏻</h1>
+        <p class="lead">Ketuk di mana saja atau tekan tombol di bawah untuk membuka kartu spesial ini. Musik akan menyala pelan — nikmati.</p>
+        <button id="open-anywhere" class="btn">Buka Kartu Ucapan dari Jalee</button>
+        <p style="margin-top:14px;color:#8a2a4b;font-size:14px">(atau ketuk layar mana saja)</p>
+      </div>
+    </section>
+
+    <!-- VIEW 2: Card -->
+    <section id="view-card" class="view" aria-hidden="true">
+      <div class="card" role="region" aria-label="Kartu Ulang Tahun">
+        <h1>Selamat Ulang Tahun Lizha Tri Wahyunii Cantikk 💗</h1>
+        <p class="lead">Ini harinya. Semoga doa dan senyum lizha dikabulkan yaaa. Buka surat cintaku ya.</p>
+        <button id="open-letter" class="btn">Buka Surat Cinta 💌</button>
+      </div>
+    </section>
+
+    <!-- VIEW 3: Final / After download -->
+    <section id="view-final" class="view" aria-hidden="true">
+      <div class="card final" role="region" aria-label="Penutup">
+        <h2>Terima Kasih 💖</h2>
+        <p class="lead">Semoga harimu penuh kejutan Lizhaa. Cek hadiahmu — semoga kamu seneng yaa dan membuatmu tersenyum.</p>
+        <button id="replay" class="btn ghost small">Kembali</button>
+      </div>
+    </section>
+
+    <!-- Popup letter (global) -->
+    <div id="popup" class="popup" role="dialog" aria-modal="true" aria-hidden="true">
+      <h3>💌 Kartu Ucapan buat Lizhaa dari Jalee </h3>
+      <p id="popup-text">
+        Lizhaaa…<br><br>
+        Di hari spesial ini aku ingin kamu tahu kaloo lagi ngobrol, nelponn, video call teh nyaman wee ama kamuu pengen tiap hari wee gtu teh. 
+        Terima kasih sudah berjuang sejauh ini atas kehidupan kamu, kamu keren bangett. Semoga doa-doamu dikabulkan, dan hidupmu dipenuhi kebahagiaan yang hangat.
+      </p>
+      <div style="display:flex;gap:10px;justify-content:center;margin-top:14px">
+        <button id="take-surprise" class="btn small">Ambil Kejutan 🎁</button>
+        <button id="close-popup" class="btn ghost small">Tutup</button>
+      </div>
     </div>
 
-    <div class="polaroid">
-        <img src="https://files.catbox.moe/yourimage3.jpg">
-        <div class="caption">Aku suka liat kamu dari dekat gini</div>
-    </div>
+  </div>
 
-    <div class="polaroid">
-        <img src="https://files.catbox.moe/yourimage4.jpg">
-        <div class="caption">Makasih udah hadir di hidup aku 💗</div>
-    </div>
-</div>
-
-
-<!-- Tombol ke Surat Cinta -->
-<button class="btn-love" onclick="downloadLoveLetter()">
-    Download Surat Cinta 💌
-</button>
+  <!-- SINGLE AUDIO (only on this SPA) -->
+  <audio id="audio" src="musik.mp3" preload="auto" loop crossorigin="anonymous"></audio>
 
 <script>
-function downloadLoveLetter() {
-    const link = document.createElement("a");
-    link.href = "https://files.catbox.moe/xxxxxx.pdf"; // ganti dengan file kamu
-    link.download = "Surat-Cinta-Untuk-Lizha.pdf";
-    link.click();
-}
-</script>
+/* ====================
+   SPA logic & effects
+   ==================== */
 
+const views = {
+  question: document.getElementById('view-question'),
+  prayer: document.getElementById('view-prayer'),
+  intro: document.getElementById('view-intro'),
+  card: document.getElementById('view-card'),
+  final: document.getElementById('view-final')
+};
+const popup = document.getElementById('popup');
+const miniModal = document.getElementById('mini-modal');
+const effects = document.getElementById('effects');
+const audio = document.getElementById('audio');
+
+let musicStarted = false;
+audio.volume = 0.20; // sangat halus
+
+function showView(name){
+  Object.values(views).forEach(v=>{
+    v.classList.remove('active');
+    v.setAttribute('aria-hidden','true');
+  });
+  views[name].classList.add('active');
+  views[name].setAttribute('aria-hidden','false');
+}
+
+/* --------------------------
+   Question view interactions
+   -------------------------- */
+document.getElementById('btn-seneng-dong').addEventListener('click', ()=>{
+  // show mini modal briefly
+  miniModal.classList.add('show');
+  miniModal.setAttribute('aria-hidden','false');
+  setTimeout(()=> {
+    miniModal.classList.remove('show');
+    miniModal.setAttribute('aria-hidden','true');
+  }, 1800);
+});
+
+document.getElementById('btn-seneng-bgt').addEventListener('click', ()=>{
+  // go to prayer view
+  showView('prayer');
+});
+
+/* --------------------------
+   Prayer view interactions
+   -------------------------- */
+document.getElementById('btn-done-doa').addEventListener('click', ()=>{
+  // After doa, go to intro (where user can click anywhere to start music)
+  showView('intro');
+});
+
+/* --------------------------
+   Intro view: clicking starts music then navigates to card
+   -------------------------- */
+function startMusicThenShowCard(){
+  if (musicStarted) {
+    showView('card');
+    return;
+  }
+  audio.play().then(()=>{
+    musicStarted = true;
+    setTimeout(()=> showView('card'), 160);
+  }).catch(err=>{
+    console.warn('Play blocked or failed:', err);
+    showView('card'); // still proceed
+  });
+}
+
+// open-anywhere button
+document.getElementById('open-anywhere').addEventListener('click', (e)=>{
+  e.stopPropagation();
+  startMusicThenShowCard();
+});
+
+// clicking background/anywhere in intro should also start (one-time)
+function introBodyClickHandler(e){
+  // if clicked a button inside intro, ignore (button handler will handle)
+  if (e.target.closest('button')) return;
+  startMusicThenShowCard();
+}
+views.intro.addEventListener('click', introBodyClickHandler, { once: true, capture: true });
+
+// keyboard
+document.addEventListener('keyup', (e)=>{
+  if (!musicStarted && (e.key === 'Enter' || e.key === ' ')) {
+    // if currently on intro view, start; otherwise ignore
+    if (views.intro.classList.contains('active')) startMusicThenShowCard();
+  }
+});
+
+/* --------------------------
+   Card view: popup, effects
+   -------------------------- */
+document.getElementById('open-letter').addEventListener('click', ()=>{
+  popup.classList.add('show');
+  popup.setAttribute('aria-hidden','false');
+  burstConfetti(36);
+  burstHearts(12);
+});
+
+document.getElementById('close-popup').addEventListener('click', ()=>{
+  popup.classList.remove('show');
+  popup.setAttribute('aria-hidden','true');
+});
+
+/* Ambil kejutan -> download + go to final */
+document.getElementById('take-surprise').addEventListener('click', ()=>{
+  const a = document.createElement('a');
+  a.href = 'lizhahbd.xlsx';
+  a.download = 'lizhahbd.xlsx';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+
+  popup.classList.remove('show');
+  popup.setAttribute('aria-hidden','true');
+
+  setTimeout(()=> {
+    showView('final');
+    burstConfetti(60);
+    burstHearts(24);
+  }, 350);
+});
+
+/* Replay */
+document.getElementById('replay').addEventListener('click', ()=> showView('intro'));
+
+/* ====================
+   Visual effects
+   ==================== */
+
+function rand(min,max){ return Math.random()*(max-min)+min; }
+
+function burstConfetti(n=40){
+  for (let i=0;i<n;i++){
+    const el = document.createElement('div');
+    el.className = 'emoji';
+    el.textContent = ['🎉','✨','🌸'][Math.floor(Math.random()*3)];
+    const size = rand(14,30);
+    el.style.fontSize = size+'px';
+    el.style.left = rand(10,90)+'vw';
+    el.style.top = '-10vh';
+    el.style.opacity = 1;
+    effects.appendChild(el);
+
+    const dur = rand(2000,4200);
+    const endX = rand(-20,20);
+    el.animate([
+      { transform: `translate(0,0) rotate(${rand(0,360)}deg)` , opacity:1 },
+      { transform: `translate(${endX}vw, 110vh) rotate(${rand(360,1080)}deg)`, opacity:0 }
+    ], { duration: dur, easing: 'cubic-bezier(.2,.9,.2,1)' });
+
+    setTimeout(()=> el.remove(), dur+80);
+  }
+}
+
+function burstHearts(n=20){
+  for (let i=0;i<n;i++){
+    const el = document.createElement('div');
+    el.className = 'emoji';
+    el.textContent = '💗';
+    el.style.fontSize = rand(16,36)+'px';
+    el.style.left = rand(5,95)+'vw';
+    el.style.top = '-8vh';
+    effects.appendChild(el);
+
+    const dur = rand(2600,5400);
+    el.animate([
+      { transform: `translateY(0) scale(1)`, opacity:1 },
+      { transform: `translateY(110vh) scale(${rand(0.9,1.6)})`, opacity:0 }
+    ], { duration: dur, easing: 'linear' });
+
+    setTimeout(()=> el.remove(), dur+80);
+  }
+}
+
+/* gentle persistent sparkles */
+(function spawnSparks(){
+  const total = 48;
+  for (let i=0;i<total;i++){
+    const s = document.createElement('div');
+    s.className = 'spark';
+    s.style.left = rand(2,98)+'vw';
+    s.style.top = rand(2,98)+'vh';
+    s.style.width = rand(3,8)+'px';
+    s.style.height = s.style.width;
+    s.style.opacity = rand(0.35,0.95);
+    s.style.transform = `scale(${rand(.4,1.2)})`;
+    effects.appendChild(s);
+    // shimmering
+    const dur = rand(1800,4200);
+    s.animate([{opacity:s.style.opacity},{opacity:0.15},{opacity:s.style.opacity}],{duration:dur,iterations:Infinity});
+  }
+})();
+
+/* small background gentle confetti loop */
+setInterval(()=> burstConfetti(6), 4200);
+setInterval(()=> burstHearts(3), 3500);
+
+/* Audio debug */
+audio.addEventListener('play', ()=> console.log('🎵 Musik dimulai'));
+audio.addEventListener('pause', ()=> console.log('⏸ Musik berhenti'));
+audio.addEventListener('error', (e)=> console.warn('Audio error', e));
+
+/* Accessibility: keys to progress while on question/prayer/intro */
+document.addEventListener('keyup', (e)=>{
+  if (e.key === 'Enter') {
+    // If on question view, treat Enter as "Seneng banget"
+    if (views.question.classList.contains('active')) {
+      document.getElementById('btn-seneng-bgt').click();
+    } else if (views.prayer.classList.contains('active')) {
+      document.getElementById('btn-done-doa').click();
+    } else if (views.intro.classList.contains('active')) {
+      document.getElementById('open-anywhere').click();
+    }
+  }
+});
+</script>
 </body>
 </html>
